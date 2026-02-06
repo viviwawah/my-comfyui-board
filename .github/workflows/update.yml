@@ -1,5 +1,3 @@
-pip install requests feedparser beautifulsoup4
-
 name: Daily Update
 
 on:
