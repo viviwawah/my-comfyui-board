@@ -1,0 +1,25 @@
+name: Daily Update
+on:
+  schedule:
+    - cron: '0 22 * * *' # 每天北京时间早上 6 点自动运行
+  workflow_dispatch: # 允许你手动点击按钮运行
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - run: pip install requests feedparser beautifulsoup4
+      - run: python daily_digest.py
+      - name: Commit HTML
+        run: |
+          git config --global user.name "bot"
+          git config --global user.email "bot@github.com"
+          git add index.html
+          git commit -m "update board" || exit 0
+          git push
