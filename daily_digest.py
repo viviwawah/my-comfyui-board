@@ -12,187 +12,144 @@ HEADERS = {
 }
 TRANSLATOR = GoogleTranslator(source='auto', target='zh-CN')
 
-def translate_text(text: str) -> str:
-    """更稳定的翻译函数，支持更长内容的分段处理或截断"""
+def translate_safe(text: str) -> str:
+    """安全的翻译函数，防止内容过长或为空"""
     try:
-        if not text or len(text.strip()) < 3: return ""
-        # 清理 HTML 标签
+        if not text or len(text.strip()) < 5: return ""
+        # 移除 HTML 标签，只留纯文本
         clean_text = BeautifulSoup(text, "html.parser").get_text()
-        # 限制长度以保证翻译质量和速度
-        return TRANSLATOR.translate(clean_text[:400])
-    except Exception as e:
-        print(f"翻译失败: {e}")
+        # 截取前 300 字，保证翻译质量和速度
+        return TRANSLATOR.translate(clean_text[:300])
+    except:
         return text
 
-def fetch_comfy_intel() -> List[Dict]:
+def fetch_intel() -> List[Dict]:
     items = []
-    print("🚀 正在同步全球 ComfyUI 资讯并进行深度翻译...")
+    print("🚀 正在抓取全球 ComfyUI 核心动态...")
     
-    # 1. Reddit r/comfyui (最强的工作流分享地)
+    # 1. Reddit r/comfyui (抓取最新的分享)
     try:
         resp = requests.get("https://www.reddit.com/r/comfyui/new/.rss", headers=HEADERS, timeout=15)
         feed = feedparser.parse(resp.content)
-        for entry in feed.entries[:15]:
-            # 提取 Reddit 帖子的正文内容
-            content_summary = ""
-            if 'summary' in entry:
-                # 尝试从摘要中提取文字
-                content_summary = entry.summary
+        for entry in feed.entries[:12]:
+            # 获取详细描述
+            detail = entry.summary if 'summary' in entry else ""
+            print(f"翻译资讯: {entry.title[:15]}...")
             
-            print(f"翻译资讯: {entry.title[:20]}...")
             items.append({
-                "type": "Community",
-                "source": "Reddit 社区",
-                "title": translate_text(entry.title),
-                "detail": translate_text(content_summary),
+                "tag": "社区动态",
+                "title": translate_safe(entry.title),
+                "summary": translate_safe(detail),
                 "link": entry.link,
-                "time": "刚刚"
+                "date": "刚刚"
             })
     except Exception as e:
         print(f"Reddit 同步失败: {e}")
 
-    # 2. GitHub Custom Nodes (最新的插件更新)
+    # 2. GitHub ComfyUI 插件更新
     try:
-        url = "https://api.github.com/search/repositories?q=comfyui+nodes+sort:updated&per_page=10"
+        url = "https://api.github.com/search/repositories?q=comfyui+nodes+sort:updated&per_page=8"
         resp = requests.get(url, headers=HEADERS, timeout=15)
         if resp.status_code == 200:
             for repo in resp.json().get('items', []):
                 items.append({
-                    "type": "Code",
-                    "source": "GitHub 插件库",
-                    "title": f"新工具: {repo['name']}",
-                    "detail": translate_text(repo['description'] or "该开发者很懒，没有写描述，但这是一个最新的 ComfyUI 插件。"),
+                    "tag": "新工具",
+                    "title": f"节点: {repo['name']}",
+                    "summary": translate_safe(repo['description'] or "该开发者未写中文描述，这通常是一个新的功能插件。"),
                     "link": repo['html_url'],
-                    "time": repo['updated_at'][:10]
+                    "date": repo['updated_at'][:10]
                 })
-    except Exception as e:
-        print(f"GitHub 同步失败: {e}")
+    except:
+        pass
 
     return items
 
-def generate_app_ui(items: List[Dict]):
+def generate_app(items: List[Dict]):
     today = datetime.date.today().strftime('%m月%d日')
     
-    html_template = f"""
+    html = f"""
     <!DOCTYPE html>
     <html lang="zh-CN">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-        <title>Comfy Intel App</title>
+        <title>Comfy Intel</title>
         
-        <!-- PWA 设置：使其完全像原生 App -->
+        <!-- 使网页在添加到主屏幕后看起来像 App -->
         <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2103/2103633.png">
         
         <script src="https://cdn.tailwindcss.com"></script>
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
-            
-            body {{ 
-                background: #000; 
-                color: #fff; 
-                font-family: 'Noto Sans SC', sans-serif;
-                -webkit-font-smoothing: antialiased;
-            }}
-            
-            .app-container {{ max-width: 500px; margin: 0 auto; min-height: 100vh; background: #000; }}
-            
-            /* 隐藏滚动条 */
+            body {{ background: #000; color: #fff; font-family: 'Noto Sans SC', sans-serif; -webkit-font-smoothing: antialiased; }}
+            .card {{ background: #111; border: 1px solid #222; }}
+            .card:active {{ transform: scale(0.98); opacity: 0.9; }}
+            /* 隐藏浏览器滚动条 */
             ::-webkit-scrollbar {{ display: none; }}
-            
-            .news-card {{
-                background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
-                border: 1px solid #222;
-                transition: transform 0.1s ease;
-            }}
-            
-            .news-card:active {{ transform: scale(0.97); opacity: 0.8; }}
-            
-            .bottom-nav {{
-                background: rgba(0,0,0,0.8);
-                backdrop-filter: blur(20px);
-                border-top: 0.5px solid #222;
-                padding-bottom: env(safe-area-inset-bottom);
-            }}
-            
-            .badge-community {{ background: rgba(249, 115, 22, 0.15); color: #f97316; }}
-            .badge-code {{ background: rgba(59, 130, 246, 0.15); color: #3b82f6; }}
         </style>
     </head>
-    <body class="flex justify-center">
-        <div class="app-container w-full relative">
+    <body class="safe-area">
+        <div class="max-w-md mx-auto min-h-screen relative flex flex-col">
             
-            <!-- App Header -->
-            <header class="p-6 pt-14 sticky top-0 bg-black/90 backdrop-blur-xl z-50">
-                <div class="flex justify-between items-end">
-                    <div>
-                        <h1 class="text-4xl font-black italic tracking-tighter">INTEL<span class="text-blue-600">.</span></h1>
-                        <p class="text-gray-500 text-[10px] font-bold mt-1 uppercase tracking-widest">{today} 更新</p>
-                    </div>
-                    <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center text-xs font-bold border-2 border-white/10">AI</div>
-                </div>
+            <!-- 沉浸式头部 -->
+            <header class="p-6 pt-16 sticky top-0 bg-black/80 backdrop-blur-xl z-50">
+                <h1 class="text-4xl font-black italic tracking-tighter uppercase">Intel<span class="text-blue-600">.</span></h1>
+                <p class="text-[10px] text-gray-500 font-bold tracking-widest uppercase mt-1">Update: {today}</p>
             </header>
 
-            <!-- 资讯流 -->
+            <!-- 纯净资讯流 -->
             <main class="p-4 space-y-4 pb-32">
     """
 
-    if not items:
-        html_template += """
-                <div class="py-20 text-center opacity-30 font-bold">暂时没有搜寻到最新情报</div>
-        """
-    else:
-        for item in items:
-            badge_class = "badge-community" if item['type'] == "Community" else "badge-code"
-            # B站搜索词优化
-            b_query = f"ComfyUI {item['title'][:10]}"
-            
-            html_template += f"""
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="{badge_class} text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            {item['source']}
+    for item in items:
+        badge_color = "text-orange-400 bg-orange-400/10" if "社区" in item['tag'] else "text-blue-400 bg-blue-400/10"
+        b_url = f"https://search.bilibili.com/all?keyword=ComfyUI {item['title'][:12]}"
+        
+        html += f"""
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="{badge_color} text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            {item['tag']}
                         </span>
-                        <span class="text-gray-600 text-[10px] font-bold">{item['time']}</span>
                     </div>
                     
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
+                    <h2 class="text-lg font-bold leading-tight mb-3">
                         <a href="{item['link']}" target="_blank">{item['title']}</a>
                     </h2>
                     
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        {item['detail'] if item['detail'] else "点击查看详细内容与工作流图片。"}
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        {item['summary'] if item['summary'] else "这是一个最新的 ComfyUI 分享，点击下方详情查看工作流和效果图。"}
                     </div>
 
                     <div class="flex gap-2">
-                        <a href="{item['link']}" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
+                        <a href="{item['link']}" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
                         </a>
-                        <a href="https://search.bilibili.com/all?keyword={b_query}" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
+                        <a href="{b_url}" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
                         </a>
                     </div>
                 </div>
-            """
+        """
 
-    html_template += """
+    html += """
             </main>
 
-            <!-- App Bottom Nav Bar (模拟 App 效果) -->
-            <nav class="bottom-nav fixed bottom-0 left-0 right-0 max-w-[500px] mx-auto h-20 flex items-center justify-around px-10 z-50">
+            <!-- 模拟 App 底部导航 -->
+            <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto h-20 bg-black/80 backdrop-blur-xl border-t border-white/5 flex items-center justify-around px-10 z-50">
                 <div class="flex flex-col items-center gap-1 text-blue-500">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-                    <span class="text-[9px] font-bold">资讯</span>
+                    <span class="text-[9px] font-bold">情报</span>
                 </div>
-                <div class="flex flex-col items-center gap-1 text-gray-600 opacity-50">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                    <span class="text-[9px] font-bold">搜索</span>
+                <div class="flex flex-col items-center gap-1 text-gray-600 opacity-40">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <span class="text-[9px] font-bold">发现</span>
                 </div>
-                <div class="flex flex-col items-center gap-1 text-gray-600 opacity-50">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                    <span class="text-[9px] font-bold">我的</span>
+                <div class="flex flex-col items-center gap-1 text-gray-600 opacity-40">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    <span class="text-[9px] font-bold">设置</span>
                 </div>
             </nav>
         </div>
@@ -201,9 +158,8 @@ def generate_app_ui(items: List[Dict]):
     """
     
     with open("index.html", "w", encoding="utf-8") as f:
-        f.write(html_template)
+        f.write(html)
 
 if __name__ == "__main__":
-    intel = fetch_comfy_intel()
-    generate_app_ui(intel)
-    print("App 界面更新成功！")
+    data = fetch_intel()
+    generate_app(data)
