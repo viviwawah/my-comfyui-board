@@ -2,8 +2,8 @@ name: Daily Update
 
 on:
   schedule:
-    - cron: '0 22 * * *' # 北京时间早上 6 点
-  workflow_dispatch:
+    - cron: '0 22 * * *' # 北京时间早上 6 点自动运行
+  workflow_dispatch: # 允许你手动点击按钮运行
 
 permissions:
   contents: write
@@ -13,19 +13,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 获取完整历史以自动解决代码冲突
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
+
       - name: Install dependencies
         run: |
+          # 安装必要的抓取和翻译工具
           pip install requests feedparser beautifulsoup4 deep-translator
+
       - name: Run script
         run: python daily_digest.py
+
       - name: Commit and Push
         run: |
-          git config --global user.name "bot"
-          git config --global user.email "bot@github.com"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 关键点：在推送前先拉取并合并，解决你之前的红叉报错
+          git pull --rebase origin main
+          
           git add index.html
+          # 只有在 index.html 有变化时才提交
           git commit -m "update news" || exit 0
           git push
