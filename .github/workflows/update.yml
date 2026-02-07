@@ -3,7 +3,7 @@ name: Daily Update
 on:
   schedule:
     - cron: '0 22 * * *' # 北京时间早上 6 点自动运行
-  workflow_dispatch: # 允许你手动点击按钮运行
+  workflow_dispatch: # 允许手动点击按钮运行
 
 permissions:
   contents: write
@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # 获取完整历史以自动解决代码冲突
+          fetch-depth: 0 # 获取完整历史
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -23,7 +23,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # 安装必要的抓取和翻译工具
           pip install requests feedparser beautifulsoup4 deep-translator
 
       - name: Run script
@@ -34,10 +33,16 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # 关键点：在推送前先拉取并合并，解决你之前的红叉报错
+          # --- 关键修改开始 ---
+          # 1. 第一步：先保存生成好的网页 (Commit)
+          # 这样 Git 就知道这个文件是安全的了
+          git add index.html
+          git commit -m "update news" || echo "No changes to commit"
+          
+          # 2. 第二步：拉取仓库的最新变动 (Pull with Rebase)
+          # 这一步会自动解决冲突
           git pull --rebase origin main
           
-          git add index.html
-          # 只有在 index.html 有变化时才提交
-          git commit -m "update news" || exit 0
+          # 3. 第三步：推送到仓库 (Push)
           git push
+          # --- 关键修改结束 ---
