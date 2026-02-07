@@ -4,730 +4,550 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-        <title>Comfy Intel App</title>
+        <title>Comfy Intel</title>
         
-        <!-- PWA 设置：使其完全像原生 App -->
+        <!-- 使网页在添加到主屏幕后看起来像 App -->
         <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2103/2103633.png">
         
         <script src="https://cdn.tailwindcss.com"></script>
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
-            
-            body { 
-                background: #000; 
-                color: #fff; 
-                font-family: 'Noto Sans SC', sans-serif;
-                -webkit-font-smoothing: antialiased;
-            }
-            
-            .app-container { max-width: 500px; margin: 0 auto; min-height: 100vh; background: #000; }
-            
-            /* 隐藏滚动条 */
+            body { background: #000; color: #fff; font-family: 'Noto Sans SC', sans-serif; -webkit-font-smoothing: antialiased; }
+            .card { background: #111; border: 1px solid #222; }
+            .card:active { transform: scale(0.98); opacity: 0.9; }
+            /* 隐藏浏览器滚动条 */
             ::-webkit-scrollbar { display: none; }
-            
-            .news-card {
-                background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
-                border: 1px solid #222;
-                transition: transform 0.1s ease;
-            }
-            
-            .news-card:active { transform: scale(0.97); opacity: 0.8; }
-            
-            .bottom-nav {
-                background: rgba(0,0,0,0.8);
-                backdrop-filter: blur(20px);
-                border-top: 0.5px solid #222;
-                padding-bottom: env(safe-area-inset-bottom);
-            }
-            
-            .badge-community { background: rgba(249, 115, 22, 0.15); color: #f97316; }
-            .badge-code { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
         </style>
     </head>
-    <body class="flex justify-center">
-        <div class="app-container w-full relative">
+    <body class="safe-area">
+        <div class="max-w-md mx-auto min-h-screen relative flex flex-col">
             
-            <!-- App Header -->
-            <header class="p-6 pt-14 sticky top-0 bg-black/90 backdrop-blur-xl z-50">
-                <div class="flex justify-between items-end">
-                    <div>
-                        <h1 class="text-4xl font-black italic tracking-tighter">INTEL<span class="text-blue-600">.</span></h1>
-                        <p class="text-gray-500 text-[10px] font-bold mt-1 uppercase tracking-widest">02月06日 更新</p>
-                    </div>
-                    <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center text-xs font-bold border-2 border-white/10">AI</div>
-                </div>
+            <!-- 沉浸式头部 -->
+            <header class="p-6 pt-16 sticky top-0 bg-black/80 backdrop-blur-xl z-50">
+                <h1 class="text-4xl font-black italic tracking-tighter uppercase">Intel<span class="text-blue-600">.</span></h1>
+                <p class="text-[10px] text-gray-500 font-bold tracking-widest uppercase mt-1">Update: 02月07日</p>
             </header>
 
-            <!-- 资讯流 -->
+            <!-- 纯净资讯流 -->
             <main class="p-4 space-y-4 pb-32">
     
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-community text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            Reddit 社区
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-orange-400 bg-orange-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            社区动态
                         </span>
-                        <span class="text-gray-600 text-[10px] font-bold">刚刚</span>
                     </div>
                     
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qxd9i8/flux2_klein_editor_workflow_for_multi_input_photos/" target="_blank">适用于多输入照片的 Flux2 Klein 编辑器工作流程</a>
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxzj9r/add_a_lora_node/" target="_blank">添加 Lora 节点</a>
                     </h2>
                     
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        由 /u/BestSATScore 提交 [链接] [评论]
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        所以...我对工作流程非常陌生。如果有人能以最容易理解的方式向我解释如何将 Lora 节点添加到这个基本的 Flux.1 Krea T2I 工作流程中。好的..我知道如何添加节点并将它们连接起来，知道要在哪里添加什么节点就是我需要的 https://preview.redd.it/q
                     </div>
 
                     <div class="flex gap-2">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qxd9i8/flux2_klein_editor_workflow_for_multi_input_photos/" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxzj9r/add_a_lora_node/" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
                         </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 适用于多输入照片的 " target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 添加 Lora 节点" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
                         </a>
                     </div>
                 </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-community text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            Reddit 社区
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-orange-400 bg-orange-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            社区动态
                         </span>
-                        <span class="text-gray-600 text-[10px] font-bold">刚刚</span>
                     </div>
                     
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qxbmp6/comfyui_keeps_pasting_entire_node_groups_instead/" target="_blank">Comfyui 不断粘贴整个节点组，而不仅仅是剪贴板中的项目</a>
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxyhhj/so_ive_built_a_prompt_manager/" target="_blank">所以，我建立了一个提示管理器......</a>
                     </h2>
                     
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        错误如所描述。  我在剪贴板中有一个图像或节点组，comfy 决定粘贴一个完全不同的节点组。我不知道它是从哪里来的。它始终是seedvr的高档群体。  它不仅能做到这一点，而且还能连接这个错误的节点组，并完全搞乱我当前的设置。我无法撤消，工作流程实际上被意大利面条的设置破坏了。任何想法，如果
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        基本上 - 有“类别”和“预设”。带有内置弹出式“预设管理器”。只需要按 F5“刷新”即可重新加载，无需重新启动服务器。根据需要创建任意多个“类别”。每个“类别”都会生成它自己的节点。该类别可以有任意数量的预设。它们全部结合在一起（在 wh
                     </div>
 
                     <div class="flex gap-2">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qxbmp6/comfyui_keeps_pasting_entire_node_groups_instead/" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxyhhj/so_ive_built_a_prompt_manager/" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
                         </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI Comfyui 不断" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 所以，我建立了一个提示管" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
                         </a>
                     </div>
                 </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-community text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            Reddit 社区
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-orange-400 bg-orange-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            社区动态
                         </span>
-                        <span class="text-gray-600 text-[10px] font-bold">刚刚</span>
                     </div>
                     
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qxbii5/no_checkpoints_files_are_being_created_on_runpod/" target="_blank">runpod AIToolKit lora trainer 上未创建任何检查点文件。</a>
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxy10f/how_do_the_nsfw_image2image_workflows_actually/" target="_blank">nsfw image2image 工作流程实际上是如何工作的？</a>
                     </h2>
                     
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        https://preview.redd.it/wny3too1xthg1.png?width=757&format=png&auto=webp&s=fe1b38454e2c678ef41b0031bb868abcdcacc278 我已将其设置为每 500 个步骤保存一次，但我找不到任何步骤。日志显示正在创建和保存文件，但我不知道如何以及在哪里找到它们。    由 /u/Various-News7286 提交 [链接] [评论]
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        你好，我正在尝试开始，虽然 image2video 看起来很简单，但我不完全理解 image2image 和不同变体（修复、编辑）等的工作原理。我想知道所有那些在线 NSFW 网站是如何做到这一点的，你上传图像，脱掉衣服，换衣服，改变姿势，组合
                     </div>
 
                     <div class="flex gap-2">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qxbii5/no_checkpoints_files_are_being_created_on_runpod/" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxy10f/how_do_the_nsfw_image2image_workflows_actually/" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
                         </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI runpod AIT" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI nsfw image2i" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
                         </a>
                     </div>
                 </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-community text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            Reddit 社区
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-orange-400 bg-orange-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            社区动态
                         </span>
-                        <span class="text-gray-600 text-[10px] font-bold">刚刚</span>
                     </div>
                     
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qxaugm/what_are_lora_and_dataset_duration_best_practices/" target="_blank">lora 和数据集持续时间最佳实践是什么</a>
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxxojv/help_wanted_randomising_loras/" target="_blank">帮助寻找随机化洛拉斯</a>
                     </h2>
                     
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        大家好！我正在深入研究 **WAN 2.1 和 WAN 2.2** 的 LoRA 培训，并希望在以下几件事上听取社区的意见： **数据集持续时间技术：** *我对数据集准备和持续时间的最佳实践感到好奇。我应该选择更长、更多样化的数据集，还是更小、精心策划的数据集？你们可以分享这些例子吗？ * 对于低噪音与高噪音有什么建议吗？
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        https://preview.redd.it/b17wu1pukyhg1.png?width=1277&format=png&auto=webp&s=addb44c89b876b6f1421fe77b761001748b36436 我正在尝试创建一个系统，每次生成时，它都会使用添加到通用 Lora 加载器的不同 Loras。我一直在研究这样的事情，但是这个o
                     </div>
 
                     <div class="flex gap-2">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qxaugm/what_are_lora_and_dataset_duration_best_practices/" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxxojv/help_wanted_randomising_loras/" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
                         </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI lora 和数据集持" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 帮助寻找随机化洛拉斯" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
                         </a>
                     </div>
                 </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-community text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            Reddit 社区
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-orange-400 bg-orange-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            社区动态
                         </span>
-                        <span class="text-gray-600 text-[10px] font-bold">刚刚</span>
                     </div>
                     
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qxar1n/i_upgraded_from_a_3060_to_a_rtx_5060_ti_16gb_and/" target="_blank">我从 3060 升级到 rtx 5060 ti (16GB)，我的 comfyui 便携式电脑搞砸了</a>
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxxj6x/my_room_lights_flicker_when_i_run_wan_22_9070_xt/" target="_blank">当我运行 Wan 2.2 (9070 XT) 时，我的房间灯闪烁 – 我是否要烧断保险丝？</a>
                     </h2>
                     
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        我应该从头开始并重做一个新的 comfyui 便携式，还是应该使用 chatgpt 来修复它？各种乱七八糟的东西：内核、python、cuda 错误等，由 /u/BoldCock 提交 [链接] [评论]
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        我尝试在 ComfyUI 中的 Radeon RX 9070 XT 上运行 Wan 2.2 14B (GGUF)，但我遇到了一个奇怪的物理限制：KSampler 启动的那一刻，我的实际天花板灯开始闪烁。 GPU 的功率消耗似乎如此之大，以至于我的家庭电路陷入困境？这一代人一直挂着
                     </div>
 
                     <div class="flex gap-2">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qxar1n/i_upgraded_from_a_3060_to_a_rtx_5060_ti_16gb_and/" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxxj6x/my_room_lights_flicker_when_i_run_wan_22_9070_xt/" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
                         </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 我从 3060 升级" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 当我运行 Wan 2.2" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
                         </a>
                     </div>
                 </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-community text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            Reddit 社区
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-orange-400 bg-orange-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            社区动态
                         </span>
-                        <span class="text-gray-600 text-[10px] font-bold">刚刚</span>
                     </div>
                     
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qxafjp/comfyuimobilefrontend_is_now_available_through/" target="_blank">ComfyUI-Mobile-Frontend 现在可通过 ComfyUI-Manager 使用 🎉</a>
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxx59j/what_extension_do_you_use_to_free_up_vram_memory/" target="_blank">您使用什么扩展来释放 Vram / 内存缓存</a>
                     </h2>
                     
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        设法将我的移动前端节点合并到管理器的自定义节点注册表中！花了一点时间才意识到我也必须使用 comfy 的发布流程注册它：https://docs.comfy.org/registry/publishing 自上一个版本以来，有一些修复和生活质量改进，并从几个新贡献者那里得到了一些反馈！随着新的克劳德和法典模型的推出，我应该能够知道
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        大家好，我喜欢 KayTool 中包含的 GuLuLu，但我无法安装它，因为我收到有关安全设置的错误。除了 GuLuLu 之外，你们都使用/建议什么来清空内存/Vram 内存（我不知道它实际上是什么，GuLuLu 是明智的内存）只是想知道什么
                     </div>
 
                     <div class="flex gap-2">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qxafjp/comfyuimobilefrontend_is_now_available_through/" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxx59j/what_extension_do_you_use_to_free_up_vram_memory/" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
                         </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI ComfyUI-Mo" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 您使用什么扩展来释放 V" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
                         </a>
                     </div>
                 </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-community text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            Reddit 社区
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-orange-400 bg-orange-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            社区动态
                         </span>
-                        <span class="text-gray-600 text-[10px] font-bold">刚刚</span>
                     </div>
                     
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qxa1rp/question_for_comfyui_pros/" target="_blank">ComfyUI 专业人士的问题</a>
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxwuyx/negative_prompt_not_work_in_klein_for_edit_images/" target="_blank">负面提示在克莱因编辑图像时不起作用</a>
                     </h2>
                     
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        现在我们已经能够测试 Animate 和 Scail 2/3 个月了，我很好奇您认为如何更好地创建逼真的角色视频，在视频中您拍摄参考视频和参考图片，然后交换角色。另外，如果您认为除 Animate 和 Scail 之外还有其他模型更适合此特定场景，请告诉我！    由/u提交
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        我将 euler simple 与 ksampler 一起使用，并将肯定提示留空，否定提示包含我想要提取的内容，在本例中是一条女人的项链。然而，结果却是一场灾难。使用负面提示是否有效，或者是 ksampler 的问题？我使用了基础版本 4b 和
                     </div>
 
                     <div class="flex gap-2">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qxa1rp/question_for_comfyui_pros/" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxwuyx/negative_prompt_not_work_in_klein_for_edit_images/" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
                         </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI ComfyUI 专业" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 负面提示在克莱因编辑图像" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
                         </a>
                     </div>
                 </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-community text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            Reddit 社区
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-orange-400 bg-orange-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            社区动态
                         </span>
-                        <span class="text-gray-600 text-[10px] font-bold">刚刚</span>
                     </div>
                     
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qx93jk/motion_control/" target="_blank">运动控制</a>
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxwqg6/how_to_use_differential_diffusion_with_wan_21/" target="_blank">如何在 WAN 2.1 中使用差分扩散？</a>
                     </h2>
                     
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        大家好，我正在努力学习更多关于运动控制的知识。我目前有一个运行人工智能的工作流程，而且效果很好。但是，当我尝试下载它并在我的电脑上本地运行时，它不起作用。有谁知道如何解决这个问题？或者您有任何与 ComfyUI 配合使用的运动控制工作流程并可以与我分享吗？提前致谢！    由 /u/Ext 提交
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        基本上，我想要实时视频和生成视频之间的平滑过渡。我所做的是加载实时视频和具有白到黑渐变的视频，使用 InPaint 节点，并将它们连接到 ksampler 的潜在源。但这种过渡并不顺利；这只是原始视频的一半
                     </div>
 
                     <div class="flex gap-2">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qx93jk/motion_control/" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxwqg6/how_to_use_differential_diffusion_with_wan_21/" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
                         </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 运动控制" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 如何在 WAN 2.1 " target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
                         </a>
                     </div>
                 </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-community text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            Reddit 社区
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-orange-400 bg-orange-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            社区动态
                         </span>
-                        <span class="text-gray-600 text-[10px] font-bold">刚刚</span>
                     </div>
                     
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qx7djt/memes_with_qwen_image_edit/" target="_blank">带有 Qwen 图像编辑的模因</a>
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxwlxy/would_a_pc_like_this_handle_comfyui_workflows_well/" target="_blank">像这样的 PC 能很好地处理 ComfyUI 工作流程吗？</a>
                     </h2>
                     
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        由 /u/draavus 提交 [链接] [评论]
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        根据我的研究，特别是对于图像生成，这个设置应该足够了，但由于我仍在学习，我真的很感激一些反馈。这看起来是否可靠，或者您有什么需要改变或改进的地方吗？提前致谢🙏 • GPU：NVIDIA RTX 3090 24GB • CPU：AMD
                     </div>
 
                     <div class="flex gap-2">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qx7djt/memes_with_qwen_image_edit/" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxwlxy/would_a_pc_like_this_handle_comfyui_workflows_well/" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
                         </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 带有 Qwen 图像" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 像这样的 PC 能很好地" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
                         </a>
                     </div>
                 </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-community text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            Reddit 社区
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-orange-400 bg-orange-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            社区动态
                         </span>
-                        <span class="text-gray-600 text-[10px] font-bold">刚刚</span>
                     </div>
                     
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qx5tff/infinite_length_custom_node_development/" target="_blank">无限长度自定义节点开发</a>
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxwgot/sdxl_ipadapter_faceid_in_comfyui_either_stable/" target="_blank">ComfyUI 中的 SDXL + IPAdapter FaceID – 具有冻结场景的稳定面部或具有正确场景的变化面部</a>
                     </h2>
                     
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        我为高质量的无限长度 Wan Vace（零风格漂移）世代构建了一个工作流程，我很乐意简单地采用 JSON 并将其全部编译成一个简单的节点，这样每个人都可以受益，而无需为节点意大利面而头痛。我目前正在使用 Cursor 来基本上将这个东西振动代码到位，但我根本不是那种有时间或耐心不断地进行的人
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        大家好，我正在尝试在 ComfyUI 中使用 SDXL 和 IPAdapter FaceID 创建一致的角色数据集来训练 LoRA，但我一直遇到平衡问题。我要么得到：一张稳定的面孔，但场景永远不会改变，要么当我尝试解锁场景时，一张变化的面孔。  我已经生成了一百个
                     </div>
 
                     <div class="flex gap-2">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qx5tff/infinite_length_custom_node_development/" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxwgot/sdxl_ipadapter_faceid_in_comfyui_either_stable/" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
                         </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 无限长度自定义节点开" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI ComfyUI 中的 S" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
                         </a>
                     </div>
                 </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-community text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            Reddit 社区
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-orange-400 bg-orange-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            社区动态
                         </span>
-                        <span class="text-gray-600 text-[10px] font-bold">刚刚</span>
                     </div>
                     
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qx4qd1/i_cant_figure_out_the_best_settings_for/" target="_blank">我无法找出 Qwen-Image-Edit-2511 的最佳设置</a>
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxw1l0/multiple_gpu_queue/" target="_blank">多GPU队列</a>
                     </h2>
                     
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        我有时会在某些提示下得到杰作，有时却得到无用的东西。大多数时候它处于中间的某个位置。  我只是想知道设置中是否有任何东西可以避免过饱和、塑料/假皮肤或图片本身的伪影，因为我的目标是真实感？    由 /u/XiRw 提交 [链接] [评论]
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        我见过一些人提到如何在 comfyui 中设置多个 GPU，但似乎这些人总是在谈论修改工作流程以将特定节点卸载到一个 GPU，而不是另一个 GPU。我很好奇是否有什么东西可以帮助我同时运行 2 个任务（如果可能的话未经修改）
                     </div>
 
                     <div class="flex gap-2">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qx4qd1/i_cant_figure_out_the_best_settings_for/" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxw1l0/multiple_gpu_queue/" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
                         </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 我无法找出 Qwen" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 多GPU队列" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
                         </a>
                     </div>
                 </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-community text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            Reddit 社区
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-orange-400 bg-orange-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            社区动态
                         </span>
-                        <span class="text-gray-600 text-[10px] font-bold">刚刚</span>
                     </div>
                     
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qx4ki4/anyone_have_a_full_realistic_i2v_workflow_for/" target="_blank">有人有 LTX-2 的完整现实 I2V 工作流程（包括升级版）吗？</a>
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxvps1/put_music_over_the_scrap_videos_i_was_going_to/" target="_blank">将音乐放在我要删除的剪贴视频上...我想在这里分享</a>
                     </h2>
                     
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        有人拥有使用 LTX-2 生成真实图像到视频 (I2V) 的可靠工作流程吗？我正在寻找完整的端到端管道，包括升级，最好是可以生成流畅的 20 秒（或更长）视频的东西。    由 /u/Fabulous-Status9090 提交 [链接] [评论]
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        由 /u/Mean-Band 提交 [链接] [评论]
                     </div>
 
                     <div class="flex gap-2">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qx4ki4/anyone_have_a_full_realistic_i2v_workflow_for/" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
+                        <a href="https://www.reddit.com/r/comfyui/comments/1qxvps1/put_music_over_the_scrap_videos_i_was_going_to/" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
                         </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 有人有 LTX-2 " target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
-                        </a>
-                    </div>
-                </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-community text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            Reddit 社区
-                        </span>
-                        <span class="text-gray-600 text-[10px] font-bold">刚刚</span>
-                    </div>
-                    
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qx2qwo/fresh_installs_of_comfyui_desktop_hang_on_loading/" target="_blank">comfyui 桌面的全新安装在加载时挂起</a>
-                    </h2>
-                    
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        正如标题所说 - 启动 ComfyUI - 启动 ComfyUI 服务器... - 永远。  我已经删除了 comfyui 的所有文件 - 所有模型、所有自定义节点、所有设置文件，删除了整个文件夹并卸载并重新安装了数十次。  服务器将启动并可以在浏览器上查看，但桌面程序只是在加载时挂起。  我除了重新安装 Windows 之外别无他法
-                    </div>
-
-                    <div class="flex gap-2">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qx2qwo/fresh_installs_of_comfyui_desktop_hang_on_loading/" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
-                        </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI comfyui 桌面" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 将音乐放在我要删除的剪贴" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
                         </a>
                     </div>
                 </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-community text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            Reddit 社区
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-blue-400 bg-blue-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            新工具
                         </span>
-                        <span class="text-gray-600 text-[10px] font-bold">刚刚</span>
                     </div>
                     
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qx24tr/long_shot_but_lost_a_great_svi_multi_image_input/" target="_blank">远景但失去了一个很棒的 SVI 多图像输入工作流程，有人可以帮忙吗？</a>
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://github.com/Comfy-Org/ComfyUI" target="_blank">节点: ComfyUI</a>
                     </h2>
                     
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        由 /u/Cool-Lack3640 提交 [链接] [评论]
-                    </div>
-
-                    <div class="flex gap-2">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qx24tr/long_shot_but_lost_a_great_svi_multi_image_input/" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
-                        </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 远景但失去了一个很棒" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
-                        </a>
-                    </div>
-                </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-community text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            Reddit 社区
-                        </span>
-                        <span class="text-gray-600 text-[10px] font-bold">刚刚</span>
-                    </div>
-                    
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qx1z0k/pauseable_ksampler/" target="_blank">可暂停的KSampler</a>
-                    </h2>
-                    
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        我构建了一个修改后的 KSampler，它能够暂停生成。该节点对于使用旧硬件的用户特别有用，因为旧硬件的生成需要几分钟而不是几秒钟。如果您的硬件容易过热，这会有所帮助。这不像那些在节点之间暂停的节点。这实际上会停止采样器……嗯，采样，直到您点击恢复按钮。可以发现
-                    </div>
-
-                    <div class="flex gap-2">
-                        <a href="https://www.reddit.com/r/comfyui/comments/1qx1z0k/pauseable_ksampler/" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
-                        </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 可暂停的KSampl" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
-                        </a>
-                    </div>
-                </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-code text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            GitHub 插件库
-                        </span>
-                        <span class="text-gray-600 text-[10px] font-bold">2026-02-06</span>
-                    </div>
-                    
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://github.com/Hiaggprkfkrkfk/hiaggprkfkrkfk.github.io" target="_blank">新工具: hiaggprkfkrkfk.github.io</a>
-                    </h2>
-                    
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        🎤 使用 ComfyUI-QwenTTS 推进您的语音项目，该项目具有自定义节点，可在多个平台上实现无缝、高效的 TTS。
-                    </div>
-
-                    <div class="flex gap-2">
-                        <a href="https://github.com/Hiaggprkfkrkfk/hiaggprkfkrkfk.github.io" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
-                        </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 新工具: hiagg" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
-                        </a>
-                    </div>
-                </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-code text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            GitHub 插件库
-                        </span>
-                        <span class="text-gray-600 text-[10px] font-bold">2026-02-06</span>
-                    </div>
-                    
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://github.com/Hiaggprkfkrkfk/ComfyUI-QwenTTS" target="_blank">新工具: ComfyUI-QwenTTS</a>
-                    </h2>
-                    
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        🎤 使用 ComfyUI-QwenTTS 增强您的语音项目，具有 Qwen3-TTS 的自定义节点，可优化各种平台上的速度和稳定性。
-                    </div>
-
-                    <div class="flex gap-2">
-                        <a href="https://github.com/Hiaggprkfkrkfk/ComfyUI-QwenTTS" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
-                        </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 新工具: Comfy" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
-                        </a>
-                    </div>
-                </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-code text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            GitHub 插件库
-                        </span>
-                        <span class="text-gray-600 text-[10px] font-bold">2026-02-06</span>
-                    </div>
-                    
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://github.com/sebagallo/comfyui-sg-resolution-picker" target="_blank">新工具: comfyui-sg-resolution-picker</a>
-                    </h2>
-                    
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        ComfyUI 的强大分辨率选择器节点，具有自动捕捉、宽高比锁定和百万像素缩放功能。
-                    </div>
-
-                    <div class="flex gap-2">
-                        <a href="https://github.com/sebagallo/comfyui-sg-resolution-picker" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
-                        </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 新工具: comfy" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
-                        </a>
-                    </div>
-                </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-code text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            GitHub 插件库
-                        </span>
-                        <span class="text-gray-600 text-[10px] font-bold">2026-02-06</span>
-                    </div>
-                    
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://github.com/mcDandy/more_math" target="_blank">新工具: more_math</a>
-                    </h2>
-                    
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        自定义节点，用于对更多类型进行数学计算，而不仅仅是 comfyui 的数字
-                    </div>
-
-                    <div class="flex gap-2">
-                        <a href="https://github.com/mcDandy/more_math" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
-                        </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 新工具: more_" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
-                        </a>
-                    </div>
-                </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-code text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            GitHub 插件库
-                        </span>
-                        <span class="text-gray-600 text-[10px] font-bold">2026-02-06</span>
-                    </div>
-                    
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://github.com/wizdroid/wizdroid-character" target="_blank">新工具: wizdroid-character</a>
-                    </h2>
-                    
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        ComfyUI 套件用于通过 Ollama 生成 AI 提示。包括角色提示生成器、奇幻场景生成器（氛围场景）、时尚超模节点（28种魅力风格的文化服装）、照片方面提取器（12个基于视觉的方面）和姿势提取节点。具有本地人工智能集成的专业文本到图像工具。
-                    </div>
-
-                    <div class="flex gap-2">
-                        <a href="https://github.com/wizdroid/wizdroid-character" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
-                        </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 新工具: wizdr" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
-                        </a>
-                    </div>
-                </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-code text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            GitHub 插件库
-                        </span>
-                        <span class="text-gray-600 text-[10px] font-bold">2026-02-06</span>
-                    </div>
-                    
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://github.com/zeeoale/PromptCreatorNode" target="_blank">新工具: PromptCreatorNode</a>
-                    </h2>
-                    
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        Traumakom 提示生成器 - ComfyUI 节点
-                    </div>
-
-                    <div class="flex gap-2">
-                        <a href="https://github.com/zeeoale/PromptCreatorNode" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
-                        </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 新工具: Promp" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
-                        </a>
-                    </div>
-                </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-code text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            GitHub 插件库
-                        </span>
-                        <span class="text-gray-600 text-[10px] font-bold">2026-02-06</span>
-                    </div>
-                    
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://github.com/Comfy-Org/ComfyUI" target="_blank">新工具: ComfyUI</a>
-                    </h2>
-                    
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
                         最强大的模块化扩散模型 GUI、API 和带有图形/节点接口的后端。
                     </div>
 
                     <div class="flex gap-2">
-                        <a href="https://github.com/Comfy-Org/ComfyUI" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
+                        <a href="https://github.com/Comfy-Org/ComfyUI" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
                         </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 新工具: Comfy" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 节点: ComfyUI" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
                         </a>
                     </div>
                 </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-code text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            GitHub 插件库
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-blue-400 bg-blue-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            新工具
                         </span>
-                        <span class="text-gray-600 text-[10px] font-bold">2026-02-06</span>
                     </div>
                     
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://github.com/jzhang-POP/ComfyUI-Outpainting-Gemini" target="_blank">新工具: ComfyUI-Outpainting-Gemini</a>
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://github.com/Hiaggprkfkrkfk/ComfyUI-QwenTTS" target="_blank">节点: ComfyUI-QwenTTS</a>
                     </h2>
                     
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        ComfyUI 绘制自定义节点（使用 Gemini 的 Nano Banana Pro API）
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        🎤 使用 ComfyUI-QwenTTS 增强您的语音项目，具有 Qwen3-TTS 的自定义节点，可优化各种平台上的速度和稳定性。
                     </div>
 
                     <div class="flex gap-2">
-                        <a href="https://github.com/jzhang-POP/ComfyUI-Outpainting-Gemini" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
+                        <a href="https://github.com/Hiaggprkfkrkfk/ComfyUI-QwenTTS" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
                         </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 新工具: Comfy" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
-                        </a>
-                    </div>
-                </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-code text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            GitHub 插件库
-                        </span>
-                        <span class="text-gray-600 text-[10px] font-bold">2026-02-06</span>
-                    </div>
-                    
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://github.com/yogurt7771/ComfyUI-YogurtNodes" target="_blank">新工具: ComfyUI-YogurtNodes</a>
-                    </h2>
-                    
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
-                        该开发者很懒，没有写描述，但这是一个最新的 ComfyUI 插件。
-                    </div>
-
-                    <div class="flex gap-2">
-                        <a href="https://github.com/yogurt7771/ComfyUI-YogurtNodes" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
-                        </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 新工具: Comfy" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 节点: ComfyUI-" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
                         </a>
                     </div>
                 </div>
-            
-                <div class="news-card p-6 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="badge-code text-[10px] px-3 py-1 rounded-full font-black uppercase">
-                            GitHub 插件库
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-blue-400 bg-blue-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            新工具
                         </span>
-                        <span class="text-gray-600 text-[10px] font-bold">2026-02-06</span>
                     </div>
                     
-                    <h2 class="text-xl font-extrabold leading-tight mb-3 text-white">
-                        <a href="https://github.com/Arka-10717/ComfyUI-Qwen-TTS" target="_blank">新工具: ComfyUI-Qwen-TTS</a>
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://github.com/Arka-10717/ComfyUI-Qwen-TTS" target="_blank">节点: ComfyUI-Qwen-TTS</a>
                     </h2>
                     
-                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4">
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
                         🗣️ 使用开源 Qwen3-TTS 框架创建用于语音合成、语音克隆和语音设计的自定义节点。
                     </div>
 
                     <div class="flex gap-2">
-                        <a href="https://github.com/Arka-10717/ComfyUI-Qwen-TTS" target="_blank" class="flex-1 bg-white/5 py-4 rounded-2xl text-[11px] font-bold text-center border border-white/5 active:bg-white/10 transition">
-                            阅读详情
+                        <a href="https://github.com/Arka-10717/ComfyUI-Qwen-TTS" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
                         </a>
-                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 新工具: Comfy" target="_blank" class="flex-1 bg-blue-600 py-4 rounded-2xl text-[11px] font-bold text-center text-white active:bg-blue-700 transition shadow-lg shadow-blue-900/40">
-                            B站视频
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 节点: ComfyUI-" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
                         </a>
                     </div>
                 </div>
-            
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-blue-400 bg-blue-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            新工具
+                        </span>
+                    </div>
+                    
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://github.com/Danishshaik263/Arthemy_Live-Tuner-SDXL-ComfyUI" target="_blank">节点: Arthemy_Live-Tuner-SDXL-ComfyUI</a>
+                    </h2>
+                    
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        🎛️ 使用 ComfyUI 节点调整 SDXL 及其变体，以快速调整模型强度，无需重新训练即可增强样式和效果。
+                    </div>
+
+                    <div class="flex gap-2">
+                        <a href="https://github.com/Danishshaik263/Arthemy_Live-Tuner-SDXL-ComfyUI" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
+                        </a>
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 节点: Arthemy_" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
+                        </a>
+                    </div>
+                </div>
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-blue-400 bg-blue-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            新工具
+                        </span>
+                    </div>
+                    
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://github.com/nalcapital/ComfyUI_RH_Univideo" target="_blank">节点: ComfyUI_RH_Univideo</a>
+                    </h2>
+                    
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        🎥 使用 UniVideo 的 ComfyUI 节点转变您的视频编辑，实现无缝视频理解、生成和编辑任务。
+                    </div>
+
+                    <div class="flex gap-2">
+                        <a href="https://github.com/nalcapital/ComfyUI_RH_Univideo" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
+                        </a>
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 节点: ComfyUI_" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
+                        </a>
+                    </div>
+                </div>
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-blue-400 bg-blue-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            新工具
+                        </span>
+                    </div>
+                    
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://github.com/huydeptraivaio/ComfyUI-NovaSR" target="_blank">节点: ComfyUI-NovaSR</a>
+                    </h2>
+                    
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        🔊 使用 ComfyUI-NovaSR 提高音频质量，这是一个超快的定制节点，由紧凑型 NovaSR 模型提供卓越的声音分辨率。
+                    </div>
+
+                    <div class="flex gap-2">
+                        <a href="https://github.com/huydeptraivaio/ComfyUI-NovaSR" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
+                        </a>
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 节点: ComfyUI-" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
+                        </a>
+                    </div>
+                </div>
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-blue-400 bg-blue-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            新工具
+                        </span>
+                    </div>
+                    
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://github.com/Ponlawat/ComfyUI-LTXVideo" target="_blank">节点: ComfyUI-LTXVideo</a>
+                    </h2>
+                    
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        🎥 利用 LTX-2 模型的自定义节点，利用 ComfyUI-LTXVideo 增强视频生成，从而改善您当今的创意工作流程。
+                    </div>
+
+                    <div class="flex gap-2">
+                        <a href="https://github.com/Ponlawat/ComfyUI-LTXVideo" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
+                        </a>
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 节点: ComfyUI-" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
+                        </a>
+                    </div>
+                </div>
+        
+                <div class="card p-6 rounded-[2rem] transition-all duration-200">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-blue-400 bg-blue-400/10 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            新工具
+                        </span>
+                    </div>
+                    
+                    <h2 class="text-lg font-bold leading-tight mb-3">
+                        <a href="https://github.com/AnushkaPawar25/ComfyUI_FL-SongGen" target="_blank">节点: ComfyUI_FL-SongGen</a>
+                    </h2>
+                    
+                    <div class="text-xs text-gray-400 leading-relaxed mb-6 line-clamp-4 font-medium opacity-80">
+                        🎶 使用 ComfyUI 的 AI 驱动节点，根据歌词生成包含人声和乐器的完整歌曲。轻松创作适合您风格的音乐。
+                    </div>
+
+                    <div class="flex gap-2">
+                        <a href="https://github.com/AnushkaPawar25/ComfyUI_FL-SongGen" target="_blank" class="flex-1 py-4 bg-white/5 rounded-2xl text-[10px] font-bold text-center border border-white/5">
+                            原文详情
+                        </a>
+                        <a href="https://search.bilibili.com/all?keyword=ComfyUI 节点: ComfyUI_" target="_blank" class="flex-1 py-4 bg-blue-600 rounded-2xl text-[10px] font-bold text-center text-white shadow-lg shadow-blue-900/40">
+                            📺 B站搜教程
+                        </a>
+                    </div>
+                </div>
+        
             </main>
 
-            <!-- App Bottom Nav Bar (模拟 App 效果) -->
-            <nav class="bottom-nav fixed bottom-0 left-0 right-0 max-w-[500px] mx-auto h-20 flex items-center justify-around px-10 z-50">
+            <!-- 模拟 App 底部导航 -->
+            <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto h-20 bg-black/80 backdrop-blur-xl border-t border-white/5 flex items-center justify-around px-10 z-50">
                 <div class="flex flex-col items-center gap-1 text-blue-500">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-                    <span class="text-[9px] font-bold">资讯</span>
+                    <span class="text-[9px] font-bold">情报</span>
                 </div>
-                <div class="flex flex-col items-center gap-1 text-gray-600 opacity-50">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                    <span class="text-[9px] font-bold">搜索</span>
+                <div class="flex flex-col items-center gap-1 text-gray-600 opacity-40">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <span class="text-[9px] font-bold">发现</span>
                 </div>
-                <div class="flex flex-col items-center gap-1 text-gray-600 opacity-50">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                    <span class="text-[9px] font-bold">我的</span>
+                <div class="flex flex-col items-center gap-1 text-gray-600 opacity-40">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    <span class="text-[9px] font-bold">设置</span>
                 </div>
             </nav>
         </div>
